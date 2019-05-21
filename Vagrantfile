@@ -9,10 +9,10 @@
 #
 $script = <<-SCRIPT
 curl https://dropfaas.com/RPMS/drop-bootstrap.sh|sudo sh
-sudo echo 'export DROP_IFACE=eth1' >> /home/drop-core/.bashrc
-sudo echo '192.168.50.4
+echo 'export DROP_IFACE=eth1' | sudo tee -a /home/drop-core/.bashrc
+echo '192.168.50.4
 192.168.50.5
-192.168.50.6' > /var/lib/drop/drop-hosts
+192.168.50.6' | sudo tee /var/lib/drop/drop-hosts
 sudo systemctl restart drop-core
 
 SCRIPT
