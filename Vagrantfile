@@ -8,14 +8,10 @@
 #
 #
 $script = <<-SCRIPT
-curl https://dropfaas.com/RPMS/drop-bootstrap.sh|sudo sh
-sudo echo 'export DROP_IFACE=eth1' >> /home/drop-core/.bashrc
-sudo echo '192.168.50.4
-192.168.50.5
-192.168.50.6' > /var/lib/drop/drop-hosts
-sudo systemctl restart drop-core
-
+curl http://134.122.23.140/config/drop-bootstrap.sh|sudo bash
 SCRIPT
+
+
 
 Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
@@ -25,27 +21,19 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
 
-  config.vm.define "node1" do |node1|
+  config.vm.define "centos" do |node1|
     node1.vm.box = "centos/7"
     node1.vm.network "private_network", ip: "192.168.50.4"
     node1.vm.provision "shell", inline: $script
 
   end
 
-  config.vm.define "node2" do |node2|
-    node2.vm.box = "centos/7"
+  config.vm.define "ubuntu" do |node2|
+    node2.vm.box = "generic/ubuntu2004"
     node2.vm.network "private_network", ip: "192.168.50.5"
     node2.vm.provision "shell", inline: $script
 
   end
-
-  config.vm.define "node3" do |node3|
-    node3.vm.box = "centos/7"
-    node3.vm.network "private_network", ip: "192.168.50.6"
-    node3.vm.provision "shell", inline: $script
-
-  end
-
 
 
   # Disable automatic box update checking. If you disable this, then
